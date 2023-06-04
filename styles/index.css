@@ -1,0 +1,19 @@
+h1 {
+  text-align: center;
+  padding: 5px 15px;
+}
+
+h2 {
+  text-align: center;
+  margin: 0px 5px;
+  color: #aad;
+  font-size: 36pt;
+  font-weight: bold;
+}
+
+p {
+  text-align: center;
+  margin: 0px 5px;
+  color: blue;
+  font-size: 18pt;
+}
