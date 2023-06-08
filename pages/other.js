@@ -12,11 +12,11 @@ export default function Other() {
   const message = "React Next.js other sample page"
 
   const fetcher = (url) => fetch(url).then(res => res.json())
-  const [ address, setAddress ] = useState('/api/hello')
+  const [ address, setAddress ] = useState('/api/hello/0')
   const { data, err } = useSWR(address, fetcher)
 
   const onChange = (e) => {
-    setAddress('/api/hello?id=' + e.target.value)
+    setAddress('/api/hello/' + (e.target.value != '' ? e.target.value : 0))
   }
 
   return (
@@ -30,6 +30,9 @@ export default function Other() {
           <p className="h5">{message}</p>
           <Link href="/">
             <p className="text-black">&lt;&lt;go to home page</p>
+          </Link>
+          <Link href="/other2">
+            <p className="text-black">go to other2 page&gt;&gt;</p>
           </Link>
         </div>
       </Layout>
