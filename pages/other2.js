@@ -45,6 +45,9 @@ export default function Other() {
           <Link href="/other">
             <p className="text-black">&lt;&lt;go to other page</p>
           </Link>
+          <Link href="/calc">
+            <p className="text-black">go to calculator page&gt;&gt;</p>
+          </Link>
         </div>
       </Layout>
     </>
