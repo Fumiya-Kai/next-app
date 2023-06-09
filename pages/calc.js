@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Calculator() {
-  const title = "Top page"
+  const title = "Calculator page"
   const message = "React Next.js calculator page"
 
   return (
