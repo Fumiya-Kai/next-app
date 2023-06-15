@@ -38,6 +38,9 @@ export default function Home() {
           <Link href="/other">
             <p className="text-black">go to other page &gt;&gt;</p>
           </Link>
+          <Link href="/fire">
+            <p className="text-black">go to firebase page &gt;&gt;</p>
+          </Link>
         </div>
       </Layout>
     </>
