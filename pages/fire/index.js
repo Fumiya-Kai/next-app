@@ -21,7 +21,7 @@ export default function Home() {
         data.push(
           <tr key={document.id}>
             <td>
-              <a href={'/fire/del?id=' + document.id}>
+              <a href={'/fire/delete?id=' + document.id}>
                 {document.id}
               </a>
             </td>
