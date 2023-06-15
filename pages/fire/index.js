@@ -43,6 +43,9 @@ export default function Home() {
           <h5 className="mb-4">
             {message}
           </h5>
+          <Link href="/fire/add">
+            <button className="btn btn-primary mb-4">Add data</button>
+          </Link>
           <table className="table bg-white">
             <thead className="table-dark">
               <tr><th>ID</th><th>Name</th><th>Mail</th><th>Age</th></tr>
