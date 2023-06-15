@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Layout from '../../components/Layout'
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc } from "firebase/firestore"
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import '../../components/fire'
