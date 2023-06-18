@@ -1,24 +1,30 @@
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Layout from '../../components/Layout'
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import '../../components/fire'
 
 const db = getFirestore()
 
-export default function Home() {
-  const title = "Firebase page"
+export default function Find() {
+  const title = "Firebase search page"
+  const [message, setMessage] = useState('find data')
+  const [find ,setFind] = useState('')
+  const [data, setData] = useState([])
   const mydata = []
-  const [data, setData] = useState(mydata)
-  const [message, setMessage] = useState('wait...')
 
-  useEffect(() => {
-    getDocs(collection(db, 'mydata'))
+  const onChangeFind = (e) => {
+    setFind(e.target.value)
+  }
+
+  const doAction = ((e) => {
+    const q = query(collection(db, 'mydata'), where('name', '==', find))
+    getDocs(q)
     .then((snapshot) => {
       snapshot.forEach((document) => {
         const doc = document.data()
-        data.push(
+        mydata.push(
           <tr key={document.id}>
             <td>
               <a href={'/fire/delete?id=' + document.id}>
@@ -31,25 +37,22 @@ export default function Home() {
           </tr>
         )
       })
-      setData(data)
-      setMessage('Firebase data.')
+      setData(mydata)
+      setMessage("find: " + find)
     })
-  }, [])
+  })
 
   return (
     <>
       <Layout header="Next.js" title={title}>
         <div className="alert alert-primary text-center">
-          <h5 className="mb-4">
-            {message}
-          </h5>
-          <div className="flex gap-3 justify-end">
-            <Link href="/fire/add">
-              <button className="btn btn-primary mb-4">Add data</button>
-            </Link>
-            <Link href="/fire/find">
-              <button className="btn btn-secondary mb-4">Find data</button>
-            </Link>
+          <h5 className="mb-4">{message}</h5>
+          <div className="text-left mb-4">
+            <div className="form-group">
+              <label>Find:</label>
+              <input type="text" onChange={onChangeFind} className="form-control mb-3" />
+              <button className="btn btn-primary mb-4" onClick={doAction}>Find data</button>
+            </div>
           </div>
           <table className="table bg-white">
             <thead className="table-dark">
