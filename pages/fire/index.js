@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Layout from '../../components/Layout'
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import Link from 'next/link'
 import '../../components/fire'
 
 const db = getFirestore()
+
+const auth = getAuth()
+const provider = new GoogleAuthProvider()
+
+signOut(auth)
 
 export default function Home() {
   const title = "Firebase page"
@@ -14,27 +20,42 @@ export default function Home() {
   const [message, setMessage] = useState('wait...')
 
   useEffect(() => {
-    getDocs(collection(db, 'mydata'))
-    .then((snapshot) => {
-      snapshot.forEach((document) => {
-        const doc = document.data()
-        data.push(
-          <tr key={document.id}>
-            <td>
-              <a href={'/fire/delete?id=' + document.id}>
-                {document.id}
-              </a>
-            </td>
-            <td>{doc.name}</td>
-            <td>{doc.mail}</td>
-            <td>{doc.age}</td>
-          </tr>
-        )
-      })
-      setData(data)
-      setMessage('Firebase data.')
+    signInWithPopup(auth, provider)
+    .then(result => {
+      setMessage('logined: ' + result.user.displayName)
+    })
+    .catch((error) => {
+      setMessage('not logined.')
     })
   }, [])
+
+  useEffect(() => {
+    if(auth.currentUser != null) {
+      getDocs(collection(db, 'mydata'))
+      .then((snapshot) => {
+        snapshot.forEach((document) => {
+          const doc = document.data()
+          mydata.push(
+            <tr key={document.id}>
+              <td>
+                <a href={'/fire/delete?id=' + document.id}>
+                  {document.id}
+                </a>
+              </td>
+              <td>{doc.name}</td>
+              <td>{doc.mail}</td>
+              <td>{doc.age}</td>
+            </tr>
+          )
+        })
+        setData(mydata)
+      })
+    } else {
+      mydata.push(
+        <tr key="1"><th colSpan="4">can't get data.</th></tr>
+      )
+    }
+  }, [message])
 
   return (
     <>
